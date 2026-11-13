@@ -1,0 +1,33 @@
+.footer {
+  background: var(--fog);
+}
+
+.footer__inner {
+  padding-top: var(--space-14);
+  padding-bottom: var(--space-14);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+
+.footer__text {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--text-muted);
+}
+
+.footer__brand {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--navy-900);
+}
+
+.footer__link {
+  font-size: 14px;
+  font-weight: 500;
+}

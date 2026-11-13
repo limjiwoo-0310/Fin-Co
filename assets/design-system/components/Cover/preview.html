@@ -1,0 +1,31 @@
+<!-- @dsCard height=288 -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;600;700&display=swap">
+<style>
+  .fc-cover{position:relative;width:960px;height:288px;background:var(--white);overflow:hidden;font-family:var(--font-sans)}
+  .fc-cover svg{position:absolute;inset:0}
+  .navy{fill:var(--navy-900)}
+  .navy7{fill:var(--navy-700)}
+  .mist{fill:var(--mist)}
+  .paper{fill:var(--white)}
+  .sq{rx:var(--radius-0)}
+  .fc-name{position:absolute;left:48px;bottom:72px;margin:0;font-size:104px;line-height:.95;font-weight:600;letter-spacing:-0.04em;color:var(--navy-900);max-width:440px}
+  .fc-name span{font-weight:300}
+  .fc-tag{position:absolute;left:48px;bottom:40px;margin:0;font-size:13px;color:var(--text-muted);max-width:440px}
+</style>
+<div class="fc-cover">
+  <svg width="960" height="288" viewBox="0 0 960 288" aria-hidden="true">
+    <!--
+      blocks: navy-900 slab 360×288 (bleeds top, right, bottom) · navy-700 120×96 · mist 120×144 (space-section = 120 wide)
+      arrangement: one tall slab with a staggered two-block column to its left, all square (radius-0)
+      pattern: literal motif, the logo's half-disc (halfmoon tail opened 180°) and its dot, cut from the ground (white) out of the navy slab; chosen because the README says the mark comes from the halfmoon tail
+      scales: widths 120 (space-section) and 360, heights 96 / 144 (space-12 multiples), half-disc radius 96, dot r 8 (space-2), radius-0 everywhere
+    -->
+    <rect class="navy sq" x="600" y="0" width="360" height="288"></rect>
+    <rect class="navy7 sq" x="480" y="48" width="120" height="96"></rect>
+    <rect class="mist sq" x="480" y="144" width="120" height="144"></rect>
+    <path class="paper" d="M688 48 A96 96 0 0 1 688 240 Z"></path>
+    <circle class="paper" cx="872" cy="144" r="8"></circle>
+  </svg>
+  <p class="fc-name">Fin<span>&amp;</span>Co.</p>
+  <p class="fc-tag">베타 전문 어항 브랜드 — 알고 고르는 베타</p>
+</div>

@@ -1,0 +1,40 @@
+.to-breed {
+  position: fixed;
+  right: 32px;
+  bottom: 32px;
+  z-index: 15; /* 상단 메뉴(10) 위, 팝업(20) 아래 */
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--navy-900);
+  color: var(--white);
+  box-shadow: 0 4px 16px rgba(14, 34, 64, 0.18);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(8px);
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s ease,
+    visibility 0.25s,
+    background-color 0.2s ease;
+}
+
+.to-breed--visible {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+}
+
+.to-breed:hover {
+  background: var(--navy-700);
+  color: var(--white);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .to-breed {
+    transform: none;
+  }
+}

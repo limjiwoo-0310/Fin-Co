@@ -1,0 +1,192 @@
+.advanced__wrap {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 0 var(--space-10);
+}
+
+.advanced__title {
+  padding: 160px 0 96px;
+}
+
+.advanced__title-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.advanced__h1 {
+  margin: 0;
+  font-size: 56px;
+  line-height: 1.2;
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  color: var(--navy-900);
+}
+
+.advanced__intro {
+  margin: 0;
+  font-size: 17px;
+  line-height: 1.75;
+}
+
+.advanced__content {
+  padding: 0 0 96px;
+}
+
+.acc__head {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  padding-bottom: 20px;
+}
+
+.acc__head-title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.acc__count {
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.acc {
+  border-top: 1px solid var(--ink);
+}
+
+.acc__item {
+  border-bottom: 1px solid var(--line);
+}
+
+.acc__heading {
+  margin: 0;
+}
+
+.acc__trigger {
+  width: 100%;
+  min-height: 84px;
+  padding: 0 4px;
+  border: 0;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-6);
+  cursor: pointer;
+  text-align: left;
+}
+
+.acc__label {
+  display: flex;
+  align-items: baseline;
+  gap: 20px;
+}
+
+.acc__no {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.acc__title {
+  font-size: 21px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--navy-900);
+}
+
+.acc__title,
+.acc__action {
+  transition: color 0.2s ease;
+}
+
+.acc__trigger:hover .acc__title,
+.acc__trigger:hover .acc__action {
+  color: var(--navy-700);
+}
+
+.acc__action {
+  flex: none;
+  width: var(--target-min);
+  height: var(--target-min);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink);
+}
+
+.acc__action svg {
+  display: block;
+}
+
+/* ＋ → －: 세로선이 돌아 누우며 사라집니다. */
+.acc__icon-v {
+  transform-origin: 9px 9px;
+  transition:
+    transform 0.25s ease,
+    opacity 0.25s ease;
+}
+
+.acc__trigger[aria-expanded='true'] .acc__icon-v {
+  transform: rotate(90deg);
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .acc__icon-v {
+    transition: none;
+  }
+}
+
+.acc__panel {
+  padding: 8px 4px var(--space-14) 44px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.acc__lead {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.8;
+  color: var(--ink);
+}
+
+.acc__qa {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.acc__q {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.acc__a {
+  margin: 0;
+  font-size: 15.5px;
+  line-height: 1.8;
+}
+
+.acc__photo {
+  height: 320px;
+  background: var(--photo-ground);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.acc__photo-label {
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+}
+
+.advanced__back {
+  padding: 0 0 var(--space-section-lg);
+}
