@@ -1,0 +1,14 @@
+기본프롬프트
+Create a sophisticated and minimal website hero visual for a premium aquatic brand named "Fin&Co.", inspired by the attached reference image.
+
+Use a solid deep navy blue background with the exact color #0E2240. Place an elegant white Halfmoon Betta Fish as the central subject, featuring exceptionally long, flowing, fan-shaped fins with delicate translucent textures and subtle pearlescent details. The fish should appear as if gracefully swimming through the typography.
+
+Place the exact text "Fin&Co." in extremely large, bold, pure white (#FFFFFF) sans-serif typography across the center of the composition. The typography should dominate the visual and serve as the main graphic element. Position the white betta fish behind and in front of the oversized letters, creating a sophisticated overlapping effect where its flowing fins naturally interact with and partially cover the typography. Maintain clear visual separation between the white fish and white lettering through realistic shadows, subtle tonal variations, and carefully controlled layering.
+
+Maintain a balanced horizontal composition with generous negative space around the central visual. Keep the overall layout clean, restrained, and visually striking, with precise typography placement and strong contrast against the deep navy background.
+
+Use realistic high-end aquatic photography combined with contemporary Swiss-inspired editorial graphic design. The fish should look photorealistic, with intricate fin details, natural anatomy, and graceful movement. The final result should resemble a premium creative studio's website landing page, with a refined, artistic, and modern brand
+
+
+-수정했을 때 작성한 내용
+폰트를 얇은 세리프로 수정하고, 9: 16 비율로 만들고, 배경을 한 톤 더 어둡게 수정.

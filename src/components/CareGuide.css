@@ -1,0 +1,295 @@
+.care {
+  padding: var(--space-section) 0;
+}
+
+.care__inner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-10); /* 밀도 조정: 56 → 40 */
+}
+
+/* 섹션 제목 줄: 왼쪽 제목, 오른쪽 아래 '심화 사육 정보 보기' */
+.care__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: var(--space-6);
+  flex-wrap: wrap;
+}
+
+/* 추천 세트 제목 줄: 왼쪽 제목, 오른쪽 이동 버튼 */
+.care__sets-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+
+/* 적정 사육 환경 | 먹이 급여 방법 (좁은 화면에서는 한 줄씩) */
+.care__cols {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(440px, 100%), 1fr));
+  gap: var(--space-6);
+}
+
+/* 적정 사육 환경: 큰 숫자 2×2 */
+.care-stats {
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-6) var(--space-4);
+}
+
+.care-stats__item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.care-stats__value {
+  order: -1; /* 숫자를 먼저 보여 줌 (마크업은 이름 → 값 순서) */
+  margin: 0;
+  font-size: 26px; /* 11/13 조정: 32 → 26 */
+  line-height: 1.15;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  color: var(--navy-900);
+}
+
+.care-stats__label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.care-stats__note {
+  font-weight: 400;
+  color: var(--text-muted);
+}
+
+/* 수온 막대: 20~32℃ 중 24~28℃ */
+.temp-bar {
+  margin-top: 8px;
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--line);
+}
+
+/* 흰 바탕 위라 트랙은 연한 회청색 */
+.temp-bar__track {
+  position: relative;
+  height: 6px;
+  border-radius: 3px;
+  overflow: hidden;
+  background: var(--mist);
+}
+
+.temp-bar__range {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  background: var(--navy-900);
+}
+
+.temp-bar__ticks {
+  position: relative;
+  height: 18px;
+  margin-top: 8px;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.temp-bar__tick {
+  position: absolute;
+  top: 0;
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+
+.temp-bar__tick:first-child {
+  transform: none;
+}
+
+.temp-bar__tick:last-child {
+  transform: translateX(-100%);
+}
+
+.temp-bar__tick.is-range {
+  font-weight: 600;
+  color: var(--navy-900);
+}
+
+/* 사육 가이드 정보 묶음: 배경색 없이 얇은 테두리 + 라운드 (사용자 요청 11/13) */
+.care__box {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: var(--space-10); /* 밀도 조정: 48 → 40 */
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.care__box-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-4);
+}
+
+.care__note {
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+}
+
+/* dt/dd를 div로 묶어도 같은 2열 그리드가 되도록 */
+.spec-list__row {
+  display: contents;
+}
+
+.care__spec {
+  row-gap: var(--space-4);
+}
+
+.care__text {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.care__text p {
+  margin: 0;
+}
+
+.care__sets {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  padding-top: var(--space-6);
+}
+
+.care__set-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(340px, 100%), 1fr));
+  gap: var(--space-6);
+}
+
+.care__set-grid {
+  perspective: 1000px;
+}
+
+/* 추천 세트 카드: 마우스 위치(--tx, --ty: -0.5~0.5)에 따라 입체적으로 기울어짐 */
+.set-card {
+  --tx: 0;
+  --ty: 0;
+  position: relative;
+  /* 위 정보 묶음과 같은 형식: 배경색 없이 1px 테두리 + 16px 라운드 (사용자 요청 11/13) */
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  overflow: hidden; /* 사진·빛이 둥근 모서리 밖으로 나가지 않도록 */
+  display: flex;
+  flex-direction: column;
+  transform: rotateX(calc(var(--ty) * -16deg)) rotateY(calc(var(--tx) * 16deg)) scale(1);
+  transition: transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
+  will-change: transform;
+}
+
+/* 마우스를 따라갈 때는 빠르게 반응 */
+.set-card.is-tilting {
+  transform: rotateX(calc(var(--ty) * -16deg)) rotateY(calc(var(--tx) * 16deg)) scale(1.02);
+  transition: transform 0.12s ease-out;
+}
+
+/* 커서 쪽에 비치는 은은한 빛 */
+.set-card__glare {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0;
+  background: radial-gradient(
+    circle at calc((var(--tx) + 0.5) * 100%) calc((var(--ty) + 0.5) * 100%),
+    rgba(255, 255, 255, 0.35),
+    rgba(255, 255, 255, 0) 55%
+  );
+  transition: opacity 0.4s ease;
+}
+
+.set-card.is-tilting .set-card__glare {
+  opacity: 1;
+}
+
+.set-card__photo {
+  height: 200px; /* 밀도 조정: 280 → 200 */
+  background: var(--mist-deep);
+  overflow: hidden;
+}
+
+/* 사진은 반대 방향으로 살짝 움직여 카드 안에 깊이가 생김 */
+.set-card__photo .photo {
+  transform: translate(calc(var(--tx) * -10px), calc(var(--ty) * -10px)) scale(1.06);
+  transition: transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.set-card.is-tilting .set-card__photo .photo {
+  transition: transform 0.12s ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .set-card,
+  .set-card.is-tilting,
+  .set-card__photo .photo {
+    transform: none;
+    transition: none;
+  }
+}
+
+.set-card__body {
+  padding: 28px 28px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1 1 auto;
+}
+
+.set-card__label {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  color: var(--text-muted);
+}
+
+.set-card__name {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--navy-900);
+}
+
+.set-card__desc {
+  font-size: 14.5px;
+  line-height: 1.65;
+}
+
+.set-card__price {
+  margin-top: auto;
+  padding-top: var(--space-4);
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.set-card__price-label {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.set-card__price-value {
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--navy-900);
+}

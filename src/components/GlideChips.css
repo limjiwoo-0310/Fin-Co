@@ -1,0 +1,101 @@
+.glide-chips {
+  position: relative;
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+  isolation: isolate;
+}
+
+/* 움직이는 면 두 개: 마우스를 따라가는 mist 면, 선택을 따라가는 남색 면 (모서리 직각) */
+.glide-chips__hover,
+.glide-chips__active {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  opacity: 0;
+  pointer-events: none;
+  will-change: transform, width, height;
+}
+
+/* 알약형 라운드 (사용자 승인 11/13): 버튼과 움직이는 면 모두 */
+.glide-chips__hover,
+.glide-chips__active,
+.glide-chips .glide-chips__chip.chip {
+  border-radius: var(--radius-pill);
+}
+
+.glide-chips__hover {
+  z-index: 0;
+  background: var(--mist);
+}
+
+.glide-chips__active {
+  z-index: 1;
+  background: var(--navy-900);
+}
+
+/* 버튼 자체는 배경 없이 테두리와 글자만. 면은 위의 움직이는 면이 대신합니다. */
+.glide-chips__chip.chip {
+  position: relative;
+  z-index: 2;
+  background: transparent;
+  transition:
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+/* 선택된 버튼의 글자는 남색 면과 같은 색으로 숨기고, 흰 글자 층(ink)이 대신 보여 줍니다. */
+.glide-chips__chip.chip[aria-pressed='true'],
+.glide-chips__chip.chip[aria-pressed='true']:hover {
+  border-color: var(--navy-900);
+  background: transparent;
+  color: var(--navy-900);
+}
+
+/* 흰 글자 층: 버튼 줄과 똑같이 배치하고 남색 면 자리만 잘라서 보입니다. */
+.glide-chips__ink {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.glide-chips__ink .glide-chips__chip.chip {
+  display: inline-flex;
+  align-items: center;
+  border-color: transparent;
+  color: var(--white);
+}
+
+.glide-chips__ink .glide-chips__chip.chip.is-selected {
+  font-weight: 500;
+}
+
+/* 색·패턴 찾기(F-01): 테두리 없이 글자와 움직이는 면만 보입니다.
+   크기가 바뀌지 않도록 1px 테두리 자리는 투명으로 남겨 둡니다. */
+.glide-chips:not(.glide-chips--form) .glide-chips__chip.chip,
+.glide-chips:not(.glide-chips--form) .glide-chips__chip.chip:hover,
+.glide-chips:not(.glide-chips--form) .glide-chips__chip.chip[aria-pressed='true'] {
+  border-color: transparent;
+}
+
+/* 입양 신청서 선택 옵션: 선택 면은 ink 색, 선택해도 글자 굵기는 그대로 */
+.glide-chips--form .glide-chips__active {
+  background: var(--ink);
+}
+
+.glide-chips--form .glide-chips__chip.chip[aria-pressed='true'],
+.glide-chips--form .glide-chips__chip.chip[aria-pressed='true']:hover {
+  border-color: var(--ink);
+  color: var(--ink);
+}
+
+.glide-chips--form .glide-chips__ink .glide-chips__chip.chip.is-selected {
+  font-weight: 400;
+}

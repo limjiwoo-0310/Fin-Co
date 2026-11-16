@@ -1,0 +1,24 @@
+{
+  "v": 3,
+  "layout": "files",
+  "createdOnFiles": { "v": 1, "at": "2026-11-13T06:10:00Z" },
+  "title": "Fin&Co. 디자인 시스템",
+  "namespace": "FinCo",
+  "libraries": [],
+  "sections": {},
+  "groups": ["Logos"],
+  "assetGroups": {
+    "Logos": {
+      "name": "Logos",
+      "tile": "m",
+      "order": ["finco-mark-navy.svg", "finco-mark-white.svg"],
+      "files": {
+        "finco-mark-navy.svg": { "name": "finco-mark-navy.svg", "blob": "ffc2ef07e583bc22af21d1ce34eb044f", "size": 282, "type": "image/svg+xml" },
+        "finco-mark-white.svg": { "name": "finco-mark-white.svg", "blob": "d039339e0b300cf7fedfcbec9cce8926", "size": 282, "type": "image/svg+xml" }
+      }
+    }
+  },
+  "blobs": {},
+  "docs": { "readme": "project/README.md", "sections": [] },
+  "lastChange": { "by": "임지우", "at": "2026-11-13T06:10:00Z", "via": "Cowork", "note": "디자인 캔버스 현재 상태(메인·팝업·심화 페이지)에서 첫 시스템 작성" }
+}

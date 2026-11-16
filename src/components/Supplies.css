@@ -1,0 +1,66 @@
+.supplies {
+  padding: var(--space-section) 0;
+}
+
+.supplies__inner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-14);
+}
+
+.supplies__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(340px, 100%), 1fr));
+  gap: var(--space-6);
+}
+
+/* 세트·용품 카드: 사진 · 이름 · 설명 2줄 · 추가 정보 · 구매 */
+.pcard {
+  padding: 16px 16px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: background-color 0.25s ease;
+}
+
+.pcard:hover {
+  background: var(--hover-tint);
+}
+
+.pcard__photo {
+  height: 320px;
+  background: var(--ivory);
+  overflow: hidden;
+}
+
+.pcard__name {
+  margin-top: 10px;
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--navy-900);
+}
+
+.pcard__desc {
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--text-muted);
+}
+
+.pcard__extra {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.pcard__buy {
+  margin-top: 8px;
+  align-self: flex-start;
+  height: 44px;
+  padding: 0 20px;
+  font-size: 14px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pcard {
+    transition: none;
+  }
+}

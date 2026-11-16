@@ -1,0 +1,67 @@
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  --header-fg: var(--white);
+}
+
+/* 첫 화면을 지나면 흰 배경 + 기본 글자 색 */
+.site-header--past-hero {
+  --header-fg: var(--text);
+  background: var(--white);
+}
+
+.site-header__inner {
+  height: 96px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-6);
+}
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--header-fg);
+  text-decoration: none;
+}
+
+.logo:hover {
+  color: var(--header-fg);
+}
+
+.logo__text {
+  font-size: 21px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.logo__amp {
+  font-weight: 300;
+}
+
+.site-nav {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  gap: var(--space-10);
+}
+
+.site-nav a {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--target-min);
+  color: var(--header-fg);
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.site-nav a:hover {
+  color: var(--header-fg);
+  opacity: 0.75;
+}

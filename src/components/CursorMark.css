@@ -1,0 +1,35 @@
+.cursor-mark {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100; /* 팝업·안내 메시지 위 */
+  width: 22px;
+  height: 22px;
+  margin: -11px 0 0 -11px; /* 마크 가운데가 기준점에 오도록 */
+  pointer-events: none;
+  color: var(--navy-900);
+  opacity: 0;
+  transition:
+    opacity 0.25s ease,
+    color 0.25s ease;
+  will-change: transform;
+}
+
+.cursor-mark svg {
+  display: block;
+}
+
+.cursor-mark--visible {
+  opacity: 1;
+}
+
+/* 남색 첫 화면·팝업 뒤 어두운 배경 위 */
+.cursor-mark--light {
+  color: var(--white);
+}
+
+@media (hover: none), (pointer: coarse), (prefers-reduced-motion: reduce) {
+  .cursor-mark {
+    display: none;
+  }
+}
