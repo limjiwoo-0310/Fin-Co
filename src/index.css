@@ -125,6 +125,15 @@ select:focus-visible {
   line-height: 1.7;
 }
 
+/* eyebrow와 본문(body-lg) 굵기 차이 (사용자 요청 11/16): eyebrow 500 → 600, 본문 400 → 300 */
+.eyebrow {
+  font-weight: 600;
+}
+
+.body-lg {
+  font-weight: 300;
+}
+
 .block-title {
   margin: 0;
   font-size: 22px;

@@ -271,3 +271,37 @@
   font-size: 14px;
   color: var(--text-muted);
 }
+
+/* 닫기 버튼: 팝업 안을 스크롤해도 오른쪽 위에 고정 (품종·입양 팝업 공통, 사용자 요청 11/16)
+   막대 자체는 아래 내용을 가리거나 누름을 막지 않도록 하고, 버튼만 흰 배경으로 위에 띄웁니다. */
+.modal__close-bar {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.modal__close-bar .btn-close {
+  pointer-events: auto;
+  background: var(--white);
+  border-radius: 50%;
+}
+
+.modal__close-bar .btn-close:hover {
+  background: var(--hover-tint);
+}
+
+/* 입양 신청서 필수 항목 경고 (사용자 요청 11/16): 빈 칸 아래 빨간 문구 + 칸 테두리 빨간색 */
+.adopt-form {
+  --error: #c8372d; /* 흰 바탕 대비 약 5:1 */
+}
+
+.adopt-form__error {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--error);
+}
+
+.adopt-form__field:has(.adopt-form__error) .adopt-form__control {
+  border-color: var(--error);
+}

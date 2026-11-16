@@ -19,13 +19,49 @@ function OptionGroup({ label, options, value, onChange }) {
   )
 }
 
+// 입양 신청서 필수 항목: 비어 있으면 해당 칸 아래에 경고 문구를 보여 줍니다 (사용자 요청 11/16)
+const REQUIRED = [
+  { name: 'name', msg: '이름을 입력해 주세요.' },
+  { name: 'phone', msg: '연락처를 입력해 주세요.' },
+  { name: 'handover', msg: '희망 인계 방법을 선택해 주세요.' },
+  { name: 'date', msg: '희망 날짜를 선택해 주세요.' },
+]
+
+const findErrors = (form) =>
+  Object.fromEntries(REQUIRED.filter((f) => !form.elements[f.name].value.trim()).map((f) => [f.name, f.msg]))
+
+function FieldError({ name, errors }) {
+  if (!errors[name]) return null
+  return (
+    <span className="adopt-form__error" id={`adopt-error-${name}`} role="alert">
+      {errors[name]}
+    </span>
+  )
+}
+
 // P-03 개체 상세 팝업 · 입양 신청
 function FishModal({ fish, onClose, onSubmit }) {
   const [exp, setExp] = useState(null)
   const [tank, setTank] = useState(null)
+  const [errors, setErrors] = useState({})
+
+  // 경고가 뜬 칸에 다시 입력·선택하면 그 칸의 경고만 지웁니다.
+  const clearError = (e) => {
+    const { name } = e.target
+    if (!errors[name]) return
+    setErrors((prev) => Object.fromEntries(Object.entries(prev).filter(([k]) => k !== name)))
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault()
+    // 필수 항목이 비어 있으면 경고를 보여 주고, 첫 번째 빈 칸으로 이동합니다.
+    const found = findErrors(e.currentTarget)
+    setErrors(found)
+    const first = Object.keys(found)[0]
+    if (first) {
+      e.currentTarget.elements[first].focus()
+      return
+    }
     onSubmit() // 실제 전송 없이 P-04로 전환
   }
 
@@ -67,7 +103,7 @@ function FishModal({ fish, onClose, onSubmit }) {
         </dl>
 
         {/* S-16 입양 신청 폼 (F-02) */}
-        <form className="adopt-form" onSubmit={handleSubmit}>
+        <form className="adopt-form" onSubmit={handleSubmit} onChange={clearError}>
           <div className="adopt-form__head">
             <h3 className="block-title">이 개체 입양 신청하기</h3>
             <p className="adopt-form__guide">아래 항목을 작성해 주세요.</p>
@@ -76,10 +112,12 @@ function FishModal({ fish, onClose, onSubmit }) {
             <label className="adopt-form__field">
               이름
               <input className="adopt-form__control" type="text" name="name" placeholder="이름을 입력해 주세요" />
+              <FieldError name="name" errors={errors} />
             </label>
             <label className="adopt-form__field">
               연락처
               <input className="adopt-form__control" type="tel" name="phone" placeholder="010-0000-0000" />
+              <FieldError name="phone" errors={errors} />
             </label>
           </div>
           <OptionGroup label="베타를 키워 본 적이 있나요?" options={expOptions} value={exp} onChange={setExp} />
@@ -92,10 +130,12 @@ function FishModal({ fish, onClose, onSubmit }) {
                 <option>매장 방문</option>
                 <option>생물 택배</option>
               </select>
+              <FieldError name="handover" errors={errors} />
             </label>
             <label className="adopt-form__field">
               희망 날짜
               <input className="adopt-form__control" type="date" name="date" />
+              <FieldError name="date" errors={errors} />
             </label>
           </div>
           <button type="submit" className="btn-primary">

@@ -189,12 +189,14 @@
     animation: mobile-sheet-up 0.35s cubic-bezier(0.2, 0.7, 0.2, 1) both;
   }
 
-  /* 팝업 안을 스크롤하면 시트가 화면 전체(100%)로 커집니다 (src/mobile/touch.js에서 data-sheet-full 지정) */
-  .modal-scrim .modal:has(.breed-modal__body) {
+  /* 팝업 안을 스크롤하면 시트가 화면 전체(100%)로 커집니다 (품종·입양 팝업, src/mobile/touch.js에서 data-sheet-full 지정) */
+  .modal-scrim .modal:has(.breed-modal__body),
+  .modal-scrim .modal:has(.fish-modal__body) {
     transition: max-height 0.3s cubic-bezier(0.2, 0.7, 0.2, 1);
   }
 
-  .modal-scrim .modal[data-sheet-full='true']:has(.breed-modal__body) {
+  .modal-scrim .modal[data-sheet-full='true']:has(.breed-modal__body),
+  .modal-scrim .modal[data-sheet-full='true']:has(.fish-modal__body) {
     max-height: 100%;
   }
 
@@ -411,6 +413,15 @@
     color: var(--navy-700);
   }
 
+  /* 팝업 위에 고정된 닫기 버튼(src/components/Modal.css): 터치에서는 흰 배경 유지, 누를 때만 색 */
+  .modal__close-bar .btn-close:hover {
+    background: var(--white);
+  }
+
+  .modal__close-bar .btn-close:active {
+    background: var(--hover-tint);
+  }
+
   /* 선택 전 칩 (색·패턴 찾기 칩의 테두리는 GlideChips.css에서 계속 투명) */
   .chip:not([aria-pressed='true']):hover {
     border-color: var(--line-control);
@@ -551,7 +562,8 @@
 }
 
 @media (hover: none) and (pointer: coarse) and (prefers-reduced-motion: reduce) {
-  .modal-scrim .modal:has(.breed-modal__body) {
+  .modal-scrim .modal:has(.breed-modal__body),
+  .modal-scrim .modal:has(.fish-modal__body) {
     transition: none;
   }
 
