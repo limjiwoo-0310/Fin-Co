@@ -9,7 +9,7 @@ export const isTouchDevice = () => window.matchMedia(TOUCH_QUERY).matches
 // 눌림 피드백(mobile.css의 :active)이 보이도록 빈 리스너를 둡니다. 마우스 환경에서는 실행되지 않습니다.
 document.addEventListener('touchstart', () => {}, { passive: true })
 
-// 품종 상세 팝업(P-02 시트): 팝업 안을 스크롤하기 시작하면 시트가 화면 전체로 커집니다.
+// 품종 상세(P-02) · 입양(P-03) 팝업 시트: 팝업 안을 스크롤하기 시작하면 시트가 화면 전체로 커집니다.
 // (윗부분이 90% 높이에서 잘린 채로 스크롤되지 않도록) 한 번 커지면 닫을 때까지 유지합니다.
 // scroll 이벤트는 위로 전달되지 않아 capture 단계에서 받습니다. 터치 기기에서만 동작합니다.
 document.addEventListener(
@@ -17,7 +17,7 @@ document.addEventListener(
   (e) => {
     const el = e.target
     if (!isTouchDevice() || !(el instanceof Element)) return
-    if (!el.matches('.modal') || !el.querySelector('.breed-modal__body')) return
+    if (!el.matches('.modal') || !el.querySelector('.breed-modal__body, .fish-modal__body')) return
     if (el.scrollTop > 0 && el.dataset.sheetFull !== 'true') el.dataset.sheetFull = 'true'
   },
   { capture: true, passive: true },

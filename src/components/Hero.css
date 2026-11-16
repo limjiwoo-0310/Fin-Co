@@ -126,3 +126,11 @@
     animation: none;
   }
 }
+
+/* 첫 화면 위 작은 글(BETTA SPECIALIST) 12px → 16px: 데스크탑 한정 (사용자 요청 11/16)
+   터치 기기(src/mobile/touch.js의 TOUCH_QUERY)가 아닐 때만 적용합니다. */
+@media not all and (hover: none) and (pointer: coarse) {
+  .hero__eyebrow {
+    font-size: 16px;
+  }
+}

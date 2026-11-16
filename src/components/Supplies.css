@@ -64,3 +64,21 @@
     transition: none;
   }
 }
+
+/* 상품 카드 라운드 (사용자 요청 11/16): 카드(마우스 올림 배경) 16px, 사진 12px */
+.pcard {
+  border-radius: 16px;
+}
+
+.pcard__photo {
+  border-radius: 12px;
+}
+
+/* 설명과 추가 정보 강약 (사용자 요청 11/16): 설명은 진하게, 추가 정보는 흐리게 */
+.pcard__desc {
+  color: var(--ink);
+}
+
+.pcard__extra {
+  color: var(--text-muted);
+}
