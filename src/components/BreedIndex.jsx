@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { breeds } from '../data/breeds.js'
 import './BreedIndex.css'
+import { isTouchDevice } from '../mobile/touch.js'
 
 // S-04 품종 도감
 // - 품종 카드를 3벌 이어 붙이고, 양 끝에 가까워지면 같은 위치의 다른 벌로 조용히 옮겨 끝없이 반복되게 합니다.
@@ -35,6 +36,12 @@ function BreedIndex({ onOpen }) {
   // 처음에는 가운데 벌의 첫 카드가 왼쪽 끝에 오도록
   useLayoutEffect(() => {
     rowRef.current.scrollLeft = setWidth()
+    // 모바일·태블릿(터치 기기): 가운데 벌의 첫 카드가 화면 가운데에 오도록 (좌우 카드가 조금씩 보임)
+    if (isTouchDevice()) {
+      const row = rowRef.current
+      const first = row.children[breeds.length]
+      row.scrollLeft = first.offsetLeft + first.offsetWidth / 2 - row.clientWidth / 2
+    }
   }, [])
 
   // 양 끝에 가까워지면 한 벌만큼 옮겨 반복되게 합니다. 보이는 화면은 그대로입니다.
@@ -61,6 +68,8 @@ function BreedIndex({ onOpen }) {
   }
 
   const centerCard = (el, copy, index) => {
+    // 모바일·태블릿(터치 기기): 카드가 가운데로 이동·확대되는 동작 없음 (docs/interaction.md 8번)
+    if (isTouchDevice()) return
     const row = rowRef.current
     setActive({ copy, index })
     cancelAnimationFrame(animFrame.current)

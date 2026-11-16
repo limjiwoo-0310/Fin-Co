@@ -1,10 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="2 2 22 22">
-  <!-- Fin&Co. 로고 마크(반원 + 점). 탭에서 잘 보이도록 여백을 줄이고, 어두운 탭 표시줄에서는 흰색 -->
-  <style>
-    .m { fill: #0E2240; stroke: #0E2240; }
-    @media (prefers-color-scheme: dark) { .m { fill: #FFFFFF; stroke: #FFFFFF; } }
-  </style>
-  <path class="m" d="M5 3 A10 10 0 0 1 5 23 Z" stroke-width="0" />
-  <line class="m" x1="5" y1="3" x2="5" y2="23" stroke-width="1.5" />
-  <circle class="m" cx="19.5" cy="13" r="1.8" stroke-width="0" />
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 26 26">
+  <!-- Fin&Co. 로고 마크(반원 + 점): 프라이머리 색(navy-900 #0E2240) 동그란 배경 위에 흰색 -->
+  <circle cx="13" cy="13" r="13" fill="#0E2240" />
+  <g fill="#FFFFFF" stroke="#FFFFFF" transform="translate(13 13) scale(0.7) translate(-12.8 -13)">
+    <path d="M5 3 A10 10 0 0 1 5 23 Z" stroke-width="0" />
+    <line x1="5" y1="3" x2="5" y2="23" stroke-width="1.5" />
+    <circle cx="19.5" cy="13" r="1.8" stroke-width="0" />
+  </g>
 </svg>

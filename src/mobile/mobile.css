@@ -1,0 +1,568 @@
+/* ───────── 모바일·태블릿(터치 기기) 전용 인터랙션 ─────────
+   docs/interaction.md 의 정리표에 따른 처리입니다.
+   데스크탑 화면과 동작은 바꾸지 않도록 모두 터치 기기 조건 안에만 둡니다. (src/mobile/touch.js 와 같은 조건) */
+
+/* 모바일 전용 햄버거 버튼: 데스크탑에서는 보이지 않음 (아래 터치 기기 조건에서만 표시) */
+.site-menu-toggle {
+  display: none;
+}
+
+@media (hover: none) and (pointer: coarse) {
+  /* ── 히어로 ── */
+
+  /* 물결 효과 제거 (JS에서도 이미 실행하지 않음, 캔버스를 확실히 숨김) */
+  .hero .hero__canvas {
+    display: none;
+  }
+
+  /* 순차 등장: 슬로건 두 줄('알고 고르는 베타, / Fin&Co.')이 한 묶음으로 함께 나타남 */
+  .hero .rise3 {
+    animation-delay: 0.45s;
+  }
+
+  /* 높이 줄이기 (화면 전체 100svh → 500px): 높이가 낮을수록 이미지가 덜 확대돼 베타가 덜 잘립니다. */
+  .page__top .hero {
+    height: 500px;
+    height: min(500px, 100svh); /* 휴대폰을 가로로 돌려 화면이 500px보다 낮으면 화면 높이에 맞춤 */
+  }
+
+  /* 타이틀 크기 줄이기 (Fin&Co. 88px → 40px, '알고 고르는 베타,' 72px → 32px) */
+  .hero .hero__title {
+    font-size: 40px;
+  }
+
+  .hero .hero__line--light {
+    font-size: 32px;
+  }
+
+  /* 'BETTA SPECIALIST — 베타 전문 어항 브랜드' 라벨을 흰색으로 (회색 → 흰색, 남색 배경 위에서 잘 보이도록) */
+  .hero .hero__eyebrow {
+    color: var(--white);
+  }
+
+  /* 품종 도감 보기 버튼 제거 */
+  .hero .hero__cta {
+    display: none;
+  }
+
+  /* 고정 헤더: 색 전환은 그대로, 가로 메뉴 대신 햄버거 버튼 + 메뉴 패널 */
+  .site-header__inner > nav {
+    display: none;
+  }
+
+  /* 헤더 높이 줄이기 (96px → 64px) */
+  .site-header .site-header__inner {
+    height: 64px;
+  }
+
+  .site-header .site-menu-toggle {
+    position: relative;
+    z-index: 2; /* 서랍 메뉴 위에 떠서 열린 동안 ✕ 닫기 버튼 역할 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--header-fg); /* 첫 화면 위 흰색 → 지나면 기본 글자 색 (로고와 같이 전환) */
+    cursor: pointer;
+  }
+
+  /* 서랍 메뉴(M-3): 오른쪽에서 밀려 나오는 흰 판 (화면 폭 80%) + 나머지는 어두운 배경 */
+  .site-header:has(.site-menu-panel) {
+    z-index: 19; /* 품종 도감으로 가는 버튼(15) 위, 팝업(20) 아래 */
+  }
+
+  .site-header:has(.site-menu-panel) .site-menu-toggle {
+    color: var(--text); /* 흰 서랍 위에서 보이도록 */
+  }
+
+  /* 서랍 메뉴가 열려 있는 동안 뒤 페이지 스크롤 잠금 */
+  html:has(.site-menu-panel),
+  html:has(.site-menu-panel) body {
+    overflow: hidden;
+  }
+
+  .site-menu-scrim {
+    touch-action: none; /* 어두운 배경 위에서 손가락을 움직여도 뒤 페이지가 움직이지 않음 */
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    background: var(--scrim);
+    animation: mobile-fade-in 0.25s ease both;
+  }
+
+  .site-menu-panel {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    width: 80%;
+    padding-top: 64px; /* 헤더 높이만큼 비워 ✕ 버튼 아래부터 메뉴 */
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    background: var(--white);
+    box-shadow: -8px 0 24px rgba(14, 34, 64, 0.12);
+    animation: mobile-drawer-in 0.25s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
+
+  .site-menu-panel__list {
+    margin: 0;
+    padding: 8px var(--space-6) 24px;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid var(--line);
+  }
+
+  .site-menu-panel__list a {
+    display: flex;
+    align-items: center;
+    min-height: 48px;
+    color: var(--text);
+    font-size: 16px;
+    font-weight: 500;
+    text-decoration: none;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .site-menu-panel__list li:last-child a {
+    border-bottom: 0;
+  }
+
+  /* ── 품종 도감 ── */
+
+  /* 품종 카드 확대 제거 */
+  .breed-row .bcard--active {
+    transform: none;
+  }
+
+  /* 카드 3장 노출: 가운데 카드만 전부 보이고 좌우 카드는 반 이상 잘림
+     카드 폭 336px → 화면 폭의 60%. 좌우에 보이는 부분 = (40% - 간격 32px) ÷ 2 로 카드 폭의 절반보다 항상 작습니다.
+     넘긴 뒤에도 카드가 가운데에 멈추도록 스냅을 둡니다. 처음 위치는 BreedIndex.jsx에서 가운데로 맞춥니다. */
+  .breed-row-wrap .breed-row {
+    scroll-snap-type: x mandatory;
+  }
+
+  .breed-row .bcard {
+    width: 60vw;
+    scroll-snap-align: center;
+  }
+
+  /* 화면이 넓어지면 카드가 더 많이 보이도록: 카드 폭은 최대 280px까지만 커집니다.
+     폭 467px 이하(휴대폰)는 위의 60%(카드 3장 노출) 그대로이고, 그보다 넓으면 카드 폭이 280px로 고정돼 넓어진 만큼 카드가 더 보입니다. */
+  .breed-row-wrap .breed-row .bcard {
+    width: min(60vw, 280px);
+  }
+
+  /* 품종 사진(정사각형 원본)이 잘리지 않도록 사진 칸을 1:1로 (높이 300px → 카드 폭과 같게)
+     자이언트처럼 사진 폭을 가득 채운 베타도 머리·꼬리까지 보입니다. */
+  .breed-row .bcard .bcard__photo {
+    height: auto;
+    aspect-ratio: 1 / 1;
+  }
+
+  /* 양쪽 가장자리 흐림 축소 (폭 clamp(80px, 14vw, 220px) → clamp(24px, 6vw, 64px)) */
+  .breed-row-wrap .breed-edge {
+    width: clamp(24px, 6vw, 64px);
+  }
+
+  /* 작은 스크롤 막대: 드래그·클릭 없이 위치만 보여 줌 (S-04 · S-06 공통) */
+  .mini-bar {
+    pointer-events: none;
+    cursor: default;
+    touch-action: auto;
+  }
+
+  /* 품종 상세 팝업(P-02): 아래에서 위로 올라오는 시트 */
+  .modal-scrim:has(.breed-modal__body) {
+    align-items: flex-end;
+    padding: 0;
+  }
+
+  .modal-scrim .modal:has(.breed-modal__body) {
+    width: 100% !important; /* Modal.jsx의 width 880 인라인 값 대신 화면 폭 전체 */
+    max-height: 90%;
+    animation: mobile-sheet-up 0.35s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
+
+  /* 팝업 안을 스크롤하면 시트가 화면 전체(100%)로 커집니다 (src/mobile/touch.js에서 data-sheet-full 지정) */
+  .modal-scrim .modal:has(.breed-modal__body) {
+    transition: max-height 0.3s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+
+  .modal-scrim .modal[data-sheet-full='true']:has(.breed-modal__body) {
+    max-height: 100%;
+  }
+
+  /* 품종 상세 팝업 본문 좌우 여백 48px → 24px (입양 팝업과 같게) */
+  .modal .breed-modal__body {
+    padding: 8px var(--space-6) var(--space-6);
+  }
+
+  /* ── 사육 환경 가이드 ── */
+
+  /* 큰 숫자 크기 줄이기 (26px → 22px) */
+  .care-stats .care-stats__value {
+    font-size: 22px;
+  }
+
+  /* ── 새로 들어온 베타 ── */
+
+  /* 이미지 숨김 (글만 보임) */
+  .news__list .news__thumb {
+    display: none;
+  }
+
+  /* ── 개체 상세(P-03) · 입양 신청 완료(P-04) 팝업 (C-1) ── */
+
+  /* P-02와 같은 아래에서 올라오는 시트: 화면 폭 전체, 최대 높이 90% */
+  .modal-scrim:has(.fish-modal__body),
+  .modal-scrim:has(.done-modal__body) {
+    align-items: flex-end;
+    padding: 0;
+  }
+
+  .modal-scrim .modal:has(.fish-modal__body),
+  .modal-scrim .modal:has(.done-modal__body) {
+    width: 100% !important; /* Modal.jsx의 width 880 · 560 인라인 값 대신 화면 폭 전체 */
+    max-height: 90%;
+    animation: mobile-sheet-up 0.35s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
+
+  /* 안쪽 여백 줄이기 (P-03 48px · P-04 56px → 24px) */
+  .modal .fish-modal__body {
+    padding: 8px var(--space-6) var(--space-6);
+  }
+
+  .modal .done-modal__body {
+    padding: 16px var(--space-6) var(--space-6);
+  }
+
+  /* 입양 신청서 입력칸 글자 15px → 16px: 아이폰에서 16px보다 작은 입력칸을 누르면 화면이 저절로 확대되는 것을 막음 */
+  .adopt-form .adopt-form__control {
+    font-size: 16px;
+  }
+
+  /* ── 토스트 (D-1) ── */
+
+  /* 품종 도감으로 가는 버튼(48px + 아래 여백 16px) 위로 올려 겹치지 않게 (32px → 80px) */
+  .toast {
+    bottom: 80px;
+  }
+
+  /* ── 입양 카드 ── */
+
+  /* 색·패턴 찾기 칩: 가로 한 줄 (글자 14px → 13px, 좌우 여백 20px → 10px, 높이는 44px 유지)
+     작은 화면에서 한 줄에 다 들어가지 않으면 줄바꿈 대신 가로로 밀어서 봅니다. */
+  .adoption__filters {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .adoption__filters::-webkit-scrollbar {
+    display: none;
+  }
+
+  .adoption__filters .glide-chips {
+    flex: none;
+    width: max-content;
+  }
+
+  .adoption__filters .glide-chips,
+  .adoption__filters .glide-chips__ink {
+    flex-wrap: nowrap;
+  }
+
+  .adoption__filters .chip {
+    flex: none;
+    padding: 0 10px;
+    font-size: 13px;
+    white-space: nowrap;
+  }
+
+  /* 입양 카드 크기: 품종 카드와 같은 방식 (306px → 화면 폭 60%, 최대 280px)
+     휴대폰에서는 화면에 맞게 작아지고, 화면이 넓어지면 넓어진 만큼 카드가 더 보입니다. */
+  .fish-row .fcard {
+    width: min(60vw, 280px);
+  }
+
+  /* 마우스 올림 동작 삭제 (배경색 · 사진 확대). 키보드 포커스 확대는 그대로 */
+  .fish-row .fcard:hover {
+    background: transparent;
+  }
+
+  .fish-row .fcard:hover:not(:focus-visible) .fcard__photo .photo {
+    transform: none;
+  }
+
+  /* ── 추천 세트 카드 ── */
+
+  /* 기울이기 · 빛 반사 제거 (JS에서도 이미 실행하지 않음) */
+  .care__set-grid .set-card,
+  .care__set-grid .set-card.is-tilting {
+    transform: none;
+    will-change: auto;
+  }
+
+  .care__set-grid .set-card__glare {
+    display: none;
+  }
+
+  /* ── 상품 카드 ── */
+
+  /* 마우스 올림 배경 제거 */
+  .supplies__grid .pcard:hover {
+    background: transparent;
+  }
+
+  /* ── 심화 사육 정보 (P-05) ── */
+
+  /* 페이지 제목(H1)이 한 줄로 보이도록 섹션 제목(H2) 수준 크기로 */
+  .advanced__title .advanced__h1 {
+    font-size: 32px;
+  }
+
+  /* 제목 영역 여백: 위 160px → 104px (헤더 64px 기준), 아래 96px → 48px */
+  .advanced .advanced__title {
+    padding: 104px 0 48px;
+  }
+
+  /* 주제 목록: 제목 21px → 18px, 줄 높이 84px → 64px */
+  .acc__trigger .acc__title {
+    font-size: 18px;
+  }
+
+  .acc .acc__trigger {
+    min-height: 64px;
+  }
+
+  /* 주제 사진: 높이 320px 고정 → 4:3 비율 */
+  .acc .acc__photo {
+    height: auto;
+    aspect-ratio: 4 / 3;
+  }
+
+  /* ── 팝업 공통 ── */
+
+  /* 팝업 제목 32px → 24px */
+  .modal .modal__title {
+    font-size: 24px;
+  }
+
+  /* ── 공통 ── */
+
+  /* 버튼 크기 44px 이상: 색·패턴 찾기 칩만 40px이라 44px로 (나머지 버튼은 이미 44px 이상) */
+  .chip:not(.chip--form) {
+    height: 44px;
+  }
+
+  /* 팝업이 열려 있는 동안 뒤 페이지 스크롤 잠금 (바깥 탭 닫기는 그대로) */
+  html:has(.modal-scrim),
+  html:has(.modal-scrim) body {
+    overflow: hidden;
+  }
+
+  .modal-scrim,
+  .modal-scrim .modal {
+    overscroll-behavior: contain;
+  }
+
+  /* 탭한 뒤 hover 색이 남지 않도록 (E-1): hover 색은 기본 상태로 되돌리고,
+     같은 색을 누르고 있는 동안(:active)에만 보여 줍니다. 값은 각 컴포넌트 CSS의 기본·hover 값과 같습니다. */
+  .btn-secondary:hover {
+    border-color: var(--navy-900);
+    background: var(--white);
+    color: var(--navy-900);
+  }
+
+  .news__more:hover {
+    border-color: #a9b6c3;
+    background: var(--white);
+    color: var(--ink);
+  }
+
+  .btn-secondary:active,
+  .news__more:active {
+    border-color: var(--navy-900);
+    background: var(--navy-900);
+    color: var(--white);
+  }
+
+  .btn-primary:hover {
+    background: var(--navy-900);
+  }
+
+  .btn-primary:active {
+    background: var(--navy-700);
+  }
+
+  .btn-close:hover {
+    background: transparent;
+    color: var(--ink);
+  }
+
+  .btn-close:active {
+    background: var(--hover-tint);
+    color: var(--navy-700);
+  }
+
+  /* 선택 전 칩 (색·패턴 찾기 칩의 테두리는 GlideChips.css에서 계속 투명) */
+  .chip:not([aria-pressed='true']):hover {
+    border-color: var(--line-control);
+    color: var(--text);
+  }
+
+  .chip:not([aria-pressed='true']):active {
+    border-color: var(--navy-900);
+    color: var(--navy-900);
+  }
+
+  .acc__trigger:hover .acc__title {
+    color: var(--navy-900);
+  }
+
+  .acc__trigger:hover .acc__action {
+    color: var(--ink);
+  }
+
+  .acc__trigger:active .acc__title,
+  .acc__trigger:active .acc__action {
+    color: var(--navy-700);
+  }
+
+  /* 전역 a:hover 를 그대로 받는 링크는 푸터 링크뿐입니다. */
+  .footer .footer__link:hover {
+    color: var(--navy-900);
+  }
+
+  .footer .footer__link:active {
+    color: var(--navy-700);
+  }
+
+  .to-breed:hover {
+    background: var(--navy-900);
+    color: var(--white);
+  }
+
+  .to-breed:active {
+    background: var(--navy-700);
+    color: var(--white);
+  }
+
+  /* 품종 도감으로 가는 버튼 축소 (56px · 여백 32px → 48px · 여백 16px) */
+  .to-breed {
+    right: 16px;
+    bottom: 16px;
+    width: 48px;
+    height: 48px;
+  }
+}
+
+/* ───────── 휴대폰 전용 (터치 기기 + 폭 767px 이하, 태블릿 제외) ───────── */
+@media (hover: none) and (pointer: coarse) and (max-width: 767px) {
+  /* 섹션 위아래 간격 줄이기 (96px → 56px, 112px → 64px) */
+  :root {
+    --space-section: 56px;
+    --space-section-lg: 64px;
+  }
+
+  /* 좌우 여백 40px → 20px (헤더·각 섹션·심화 사육 정보 공통) */
+  .container,
+  .advanced .advanced__wrap {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  /* 어항 세트와 관련 용품: '입양 가능 개체 보기' 버튼 제거 (버튼만 있는 줄이라 줄째 숨김) */
+  .supplies__inner > .actions-end {
+    display: none;
+  }
+
+  /* 새로 들어온 베타: '입양 가능 개체 보기' 버튼 제거 (더보기/접기 버튼은 그대로) */
+  .news__actions .btn-secondary {
+    display: none;
+  }
+
+  /* 어항 세트와 관련 용품: 휴대폰은 3열 (태블릿은 기존 배치). 좁은 칸에 맞춰 여백·글자·사진을 줄이고 설명은 숨깁니다. */
+  .supplies__inner .supplies__grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-4) var(--space-2);
+  }
+
+  .supplies__grid .pcard {
+    padding: 0;
+    gap: 6px;
+  }
+
+  .supplies__grid .pcard .pcard__photo {
+    height: auto;
+    aspect-ratio: 1 / 1;
+  }
+
+  .supplies__grid .pcard .pcard__name {
+    margin-top: 4px;
+    font-size: 14px;
+  }
+
+  .supplies__grid .pcard .pcard__desc {
+    display: none;
+  }
+
+  .supplies__grid .pcard .pcard__extra {
+    font-size: 11px;
+  }
+
+  /* 구매 버튼 제거 (휴대폰만) */
+  .supplies__grid .pcard .pcard__buy {
+    display: none;
+  }
+}
+
+@keyframes mobile-sheet-up {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: none;
+  }
+}
+
+@keyframes mobile-drawer-in {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: none;
+  }
+}
+
+@keyframes mobile-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (hover: none) and (pointer: coarse) and (prefers-reduced-motion: reduce) {
+  .modal-scrim .modal:has(.breed-modal__body) {
+    transition: none;
+  }
+
+  .site-menu-panel,
+  .site-menu-scrim {
+    animation: none;
+  }
+
+  .modal-scrim .modal:has(.breed-modal__body),
+  .modal-scrim .modal:has(.fish-modal__body),
+  .modal-scrim .modal:has(.done-modal__body) {
+    animation: none;
+  }
+}

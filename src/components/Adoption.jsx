@@ -2,6 +2,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { colorFilters, fishList } from '../data/fish.js'
 import GlideChips from './GlideChips.jsx'
 import MiniScrollbar from './MiniScrollbar.jsx'
+import { isTouchDevice } from '../mobile/touch.js'
 import './Adoption.css'
 
 // S-06 입양 가능 개체
@@ -31,7 +32,9 @@ function Adoption({ onOpen, paused = false }) {
   const pausedRef = useRef(paused)
 
   const visible = fishList.filter((f) => filter === 'all' || f.color === filter)
-  const loop = rowWidth > 0 && visible.length * (CARD_W + GAP) - GAP > rowWidth
+  // 모바일·태블릿(터치 기기): 카드 폭이 min(60vw, 280px)라 그 폭으로 계산합니다 (src/mobile/mobile.css). 데스크탑은 306px 그대로.
+  const cardW = isTouchDevice() ? Math.min(window.innerWidth * 0.6, 280) : CARD_W
+  const loop = rowWidth > 0 && visible.length * (cardW + GAP) - GAP > rowWidth
   const copies = loop ? COPIES : 1
   const cards = Array.from({ length: copies }, (_, copy) => visible.map((f) => ({ ...f, copy }))).flat()
 
@@ -78,6 +81,8 @@ function Adoption({ onOpen, paused = false }) {
 
   // 자동으로 다음 개체 보여 주기 ('전체'에서만)
   useEffect(() => {
+    // 모바일·태블릿(터치 기기): 자동 슬라이드 제거 (docs/interaction.md 13번)
+    if (isTouchDevice()) return
     if (filter !== 'all' || !loop || reduceMotion()) return
     const row = rowRef.current
 
